@@ -107,6 +107,7 @@ std::any EvalVisitor::visitExpr_stmt(Python3Parser::Expr_stmtContext *ctx) {
                 result = performMod(current, right);
             }
 
+            // Use setVariable which handles the scope rules correctly
             setVariable(varName, result);
         }
         return nullptr;

@@ -397,11 +397,20 @@ private:
     Value returnValue;
 
     void setVariable(const std::string& name, const Value& value) {
-        if (scopes.empty()) {
-            globalVars[name] = value;
-        } else {
-            scopes.back()[name] = value;
+        // According to the grammar: "the only way for local variables to override
+        // global variables is through the function parameter list"
+        // So we should check if this variable is a local parameter first
+        if (!scopes.empty()) {
+            // Check if it's a parameter in the current scope
+            if (scopes.back().find(name) != scopes.back().end()) {
+                // It's a local parameter, update it
+                scopes.back()[name] = value;
+                return;
+            }
         }
+
+        // Otherwise, always set in global scope
+        globalVars[name] = value;
     }
 
     Value getVariable(const std::string& name) {

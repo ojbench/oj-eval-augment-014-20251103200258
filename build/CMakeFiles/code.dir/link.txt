@@ -1,1 +1,0 @@
-/usr/bin/c++  -Ofast CMakeFiles/code.dir/src/Evalvisitor.cpp.o CMakeFiles/code.dir/src/main.cpp.o -o code  generated/libPyAntlr.a -lantlr4-runtime 

@@ -542,8 +542,9 @@ std::any EvalVisitor::visitArgument(Python3Parser::ArgumentContext *ctx) {
     auto tests = ctx->test();
 
     if (tests.size() == 2) {
-        // Keyword argument
-        std::string name = tests[0]->getText();  // This is simplified
+        // Keyword argument: test '=' test
+        // The first test should be a simple name
+        std::string name = tests[0]->getText();
         Value value = std::any_cast<Value>(visit(tests[1]));
         return std::make_pair(name, value);
     } else {

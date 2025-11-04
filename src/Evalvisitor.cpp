@@ -119,10 +119,18 @@ std::any EvalVisitor::visitExpr_stmt(Python3Parser::Expr_stmtContext *ctx) {
     for (int i = testlists.size() - 2; i >= 0; i--) {
         auto leftTests = testlists[i]->test();
 
+        // Handle tuple unpacking: if right side is a single tuple, unpack it
+        std::vector<Value> valuesToAssign;
+        if (rightList.size() == 1 && rightList[0].type == ValueType::TUPLE) {
+            valuesToAssign = rightList[0].tupleVal;
+        } else {
+            valuesToAssign = rightList;
+        }
+
         // Assign values
-        for (size_t j = 0; j < leftTests.size() && j < rightList.size(); j++) {
+        for (size_t j = 0; j < leftTests.size() && j < valuesToAssign.size(); j++) {
             std::string varName = leftTests[j]->getText();
-            setVariable(varName, rightList[j]);
+            setVariable(varName, valuesToAssign[j]);
         }
     }
 

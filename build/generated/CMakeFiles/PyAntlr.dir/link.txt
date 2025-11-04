@@ -1,0 +1,2 @@
+/usr/bin/ar qc libPyAntlr.a CMakeFiles/PyAntlr.dir/Python3Lexer.cpp.o CMakeFiles/PyAntlr.dir/Python3Parser.cpp.o CMakeFiles/PyAntlr.dir/Python3ParserBaseVisitor.cpp.o CMakeFiles/PyAntlr.dir/Python3ParserVisitor.cpp.o
+/usr/bin/ranlib libPyAntlr.a

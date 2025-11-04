@@ -337,9 +337,25 @@ public:
             case ValueType::INT:
                 return intVal.toString();
             case ValueType::FLOAT: {
-                std::ostringstream oss;
-                oss << std::fixed << std::setprecision(6) << floatVal;
-                return oss.str();
+                // Check if it's a whole number
+                if (floatVal == std::floor(floatVal) && std::abs(floatVal) < 1e15) {
+                    std::ostringstream oss;
+                    oss << std::fixed << std::setprecision(1) << floatVal;
+                    return oss.str();
+                } else {
+                    std::ostringstream oss;
+                    oss << std::fixed << std::setprecision(6) << floatVal;
+                    std::string result = oss.str();
+                    // Remove trailing zeros
+                    size_t dotPos = result.find('.');
+                    if (dotPos != std::string::npos) {
+                        size_t lastNonZero = result.find_last_not_of('0');
+                        if (lastNonZero > dotPos) {
+                            result = result.substr(0, lastNonZero + 1);
+                        }
+                    }
+                    return result;
+                }
             }
             case ValueType::STRING:
                 return strVal;
